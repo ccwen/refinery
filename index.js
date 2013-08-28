@@ -1,4 +1,4 @@
 /*YASE entry */
-var Xml2json=require('./xml2json'); 
+var xmljson=require('./xmljson'); 
 var version=require('./package.json').version;
-module.exports={Xml2json:Xml2json,  version:version};
+module.exports={xmljson:xmljson,  version:version};

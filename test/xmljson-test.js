@@ -44,7 +44,16 @@ vows.describe('xmljson test').addBatch({
         assert.deepEqual( ["\0xml","x",'\0pb id="1"/',"y"] , topic,'output');
     },
     },
+ 'entity': {
+    topic: function () {
+        return xmljson.parse('<xml>x&kxr;y</xml>');
+    },
 
+    simpletest:function(topic) {
+   //     console.log('JSON',topic)
+        assert.deepEqual( ["\0xml","x&kxr;y"] , topic,'output');
+    },
+    },
  'attribute': {
     topic: function () {
     	return xmljson.parse('<xml a="pp" b="qq">xyz</xml>');
@@ -58,12 +67,23 @@ vows.describe('xmljson test').addBatch({
 
  'reverse': {
     topic: function () {  
-      return xmljson.stringify(['\0xml a="pp"',"xyz"] ) ;
+      return xmljson.stringify(['\0xml a="pp"',"xyz","\0"] ) ;
     },
 
     simpletest:function(topic) {
+        console.log(topic)
        assert.equal( ['<xml a="pp">xyz</xml>'] , topic ,'output');
     },
-    }
+    },
+ 'reverse2': {
+    topic: function () {  
+      return xmljson.stringify(['\0xml a="pp"',"p\n", "\0q", "xyz"] ) ;
+    },
+
+    simpletest:function(topic) {
+        console.log(topic)
+       assert.equal( ['<xml a="pp">p\n<q>xyz</q></xml>'] , topic ,'output');
+    },
+    }    
     
 }).export(module); // Export the Suite

@@ -42,11 +42,15 @@ var json2xml=function(arr) {
 	for (var i in arr) {
 		var t=arr[i];
 		if (t.charCodeAt(0)==0) {
-			var tagname=t=t.substring(1);
-			var attrpos=t.indexOf(" ");
-			if (attrpos>-1) tagname=t.substring(0,attrpos);
-			tagstack.push(tagname)
-			output+='<'+t+'>';
+			if (t.length>1) {
+				var tagname=t=t.substring(1);
+				var attrpos=t.indexOf(" ");
+				if (attrpos>-1) tagname=t.substring(0,attrpos);
+				tagstack.push(tagname)
+				output+='<'+t+'>';
+			} else {
+				output+='</'+tagstack.pop()+'>';
+			}
 		} else {
 			output+=t;
 		}
