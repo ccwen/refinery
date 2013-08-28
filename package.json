@@ -1,0 +1,17 @@
+{
+  "name": "refinery",
+  "version": "0.0.1",
+  "description": "a work flow for refining XML files",
+  "main": "index.js",
+  "scripts": {
+    "test": "vows"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yapcheahshen/refinery"
+  },
+  "author": "yapcheahshen@gmail.com",
+  "license": "GPL 3.0",
+  "readmeFilename": "README.md",
+  "gitHead": "7c455febfcff685f6a73cb7594ad09047e22e500",
+}
