@@ -1,0 +1,10 @@
+<root>
+<sutra>經一</sutra>
+<chapter n="1">章一</chapter>
+<chapter n="2">章二</chapter>
+內容<pb id="1.1"/>一
+<sutra>經一</sutra>
+<chapter n="1">章一</chapter>
+<chapter n="2">章二</chapter>
+內<pb id="1.2"/>容二
+</root>

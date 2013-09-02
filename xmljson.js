@@ -1,13 +1,14 @@
 //var sax=require('sax');
-var splitter=require('yase').splitter;
+var customfunc=require('yase').customfunc;
 var xml2json=function(str) {
-	var splitted=splitter(str);
+	var tokens=customfunc.tokenize(str);
 	var json=[], tagstack=[], selfclosing=false, text="";
 
-	for (var i in splitted.tokens) {
-		var tk=splitted.tokens[i];
+	for (var i in tokens) {
+		var tk=tokens[i];
 
 		if (tk[0]=='<' ) {
+			tk=customfunc.normalizeToken(tk);
 			if (text) {json.push(text); text=""}
 			if (tk[1]=='/') {
 				tk=tk.substring(2,tk.length-1);

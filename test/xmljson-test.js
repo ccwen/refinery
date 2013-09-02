@@ -9,11 +9,9 @@ vows.describe('xmljson test').addBatch({
     	return xmljson.parse("<xml> xyz </xml>");
     },
 	simpletest:function(topic) {
-		console.log('JSON>',topic)
-		assert.deepEqual( ["\0xml"," xyz "] , topic ,'output');
+		assert.deepEqual( ["\0xml","xyz "] , topic ,'output');
 	},
   },
-  
  'nested': {
     topic: function () {
     	return xmljson.parse("<xml>x<q>y</q>z</xml>");;
@@ -31,7 +29,7 @@ vows.describe('xmljson test').addBatch({
 
     simpletest:function(topic) {
         //console.log('JSON',topic.json)
-        assert.deepEqual( ["\0xml","x","\0q"," y "] , topic,'output');
+        assert.deepEqual( ["\0xml","x","\0q","y "] , topic,'output');
     },
     },
  'empty': {
