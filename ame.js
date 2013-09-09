@@ -47,6 +47,7 @@ var inflate=function(texts,arrtags) {
 				now[k]++;
 			}
 		}
+		//apply tag
 		return state.text;
 	}
 
