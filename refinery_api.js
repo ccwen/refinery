@@ -9,14 +9,26 @@ var save=function(opts,callback) {
 	var T=db.closestTag("xml",nslot);
 	var src=db.getTagAttr(T.name,T.ntag,"src");
 	if (!src) return {msg:'error file name'};
-    var fn='aem/'+opts.db+'/'+src.substring(0,src.length-4)+'-'+author+'.aem';
-    var res=persistent.merge(fn,opts.markups, {start: T.nslot});
+    var fn='aem/'+opts.db+'/'+src.substring(0,src.length-4)+'-'+opts.author+'.aem';
+    var res=persistent.merge(fn,opts.markups, {start: T.slot});
     callback(0,res); //in the future, save is async
 }
 save.async=true;
 
 var load=function(opts,callback) {
+	var db=Yaseuse(opts.db);
+	if (!db || !opts.selector) return null;
 
+	var starttag=db.findTagBySelector(opts.selector);
+	if (!starttag) return null;
+
+	var T=db.closestTag("xml",starttag.slot);	
+
+	var src=db.getTagAttr(T.name,T.ntag,"src");
+	if (!src) return {msg:'error file name'};
+    var fn='aem/'+opts.db+'/'+src.substring(0,src.length-4)+'-'+opts.author+'.aem';
+    var res=persistent.load(fn, {start: T.slot});
+	if (res) callback(0,res);
 }
 load.async=true;
 

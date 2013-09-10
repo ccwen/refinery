@@ -6,13 +6,31 @@
 var fs=require('fs');
 var version=require('./package.json').version;
 
+function array_unique(nav_array) {
+    nav_array = nav_array.sort(function (a, b) { return a.vpos - b.vpos; });      
+    var ret = [nav_array[0]];       
+    // Start loop at 1 as element 0 can never be a duplicate
+    for (var i = 1; i < nav_array.length; i++) { 
+        if (nav_array[i-1].vpos !== nav_array[i].vpos) {
+            ret.push(nav_array[i]);             
+        }       
+    }
+    return ret;     
+}
+
 var merge=function(fn,aemarray, opts) {
-	var loaded=load(fn);
-	loaded.header.build++;
-	loaded.markups=loaded.markups.concat(aemarray);
-	save(fn,loaded.markups, {header:loaded.header} );
+	if (fs.existsSync(fn)) {
+		var loaded=load(fn);
+		loaded.header.build++;
+		aemarray=array_unique(aemarray.concat(loaded.markups));
+		for (var i in loaded.header) {
+			opts[i]=loaded.header[i];
+		}
+	}
+	save(fn,aemarray, {header:opts} );
 }
 var load=function(fn) {
+	if (!fs.existsSync(fn)) return null;
 	var loaded=JSON.parse(fs.readFileSync(fn,'utf8'));
 	if (!loaded) return null;
 	if (loaded.header.start) {
