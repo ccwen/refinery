@@ -28,7 +28,12 @@ vows.describe('ame persistent test').addBatch({
              {id: "449183748typo",tag: "typo",vpos: 449183748}
     		,{id: "449190000typo",tag: "typo",vpos: 449190000}
 			,{id: "449191947typo",tag: "typo",vpos: 449191947}
-		]
+		],
+        after_removed:[
+             {id: "449183748typo",tag: "typo",vpos: 449183748}
+            ,{id: "449190000typo",tag: "typo",vpos: 449190000}
+        ]
+
     };
     },
     merge:function(topic) {
@@ -36,7 +41,15 @@ vows.describe('ame persistent test').addBatch({
     	persistent.merge(fn,topic.before);
 		var loaded=persistent.load(fn);	
 		assert.deepEqual(loaded.markups, topic.after);
+    },
+    removed:function(topic) {
+        var fn='test.aem';
+        var removed=[{id:"449191947typo"}];
+        persistent.merge(fn,topic.before,{removed:removed});
+        var loaded=persistent.load(fn); 
+        assert.deepEqual(loaded.markups, topic.after_removed);
     }
+
 
  }
 

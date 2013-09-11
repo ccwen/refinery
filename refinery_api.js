@@ -10,7 +10,12 @@ var save=function(opts,callback) {
 	var src=db.getTagAttr(T.name,T.ntag,"src");
 	if (!src) return {msg:'error file name'};
     var fn='aem/'+opts.db+'/'+src.substring(0,src.length-4)+'-'+opts.author+'.aem';
-    var res=persistent.merge(fn,opts.markups, {start: T.slot});
+
+    var res=persistent.merge(fn,opts.markups, 
+    		{ removed:opts.removed,start: T.slot, 
+    		  signature:{slotcount:db.meta.slotcount, tokencount:db.meta.tokencount}
+    		}
+    	);
     callback(0,res); //in the future, save is async
 }
 save.async=true;
